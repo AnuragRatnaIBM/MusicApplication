@@ -21,6 +21,4 @@ public class Music {
     private int trackId;
     private String trackName;
     private String trackComments;
-
-
 }
