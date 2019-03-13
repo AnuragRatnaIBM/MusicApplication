@@ -1,6 +1,8 @@
 package com.stackroute.musicxapplication.controller;
 
 import com.stackroute.musicxapplication.domain.Music;
+import com.stackroute.musicxapplication.exceptions.TrackAlreadyExitsException;
+import com.stackroute.musicxapplication.exceptions.TrackNotFoundException;
 import com.stackroute.musicxapplication.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,18 @@ public class MusicController {
         this.musicService = musicService;
     }
     @PostMapping("/track")
-    public ResponseEntity<Music> saveTrack(@RequestBody Music music)
+    public ResponseEntity<Music> saveTrack(@RequestBody Music music) throws Exception
     {
-        Music musicList=musicService.saveTrack(music);
-        return new ResponseEntity<Music>(musicList,HttpStatus.OK);
+        ResponseEntity responseEntity;
+        musicService.saveTrack(music);
+        responseEntity=new ResponseEntity<String>("Successfully CREATED",HttpStatus.CREATED);
+        return responseEntity;
     }
     @GetMapping("/tracks")
     public ResponseEntity<List<Music>> displayTracks()
     {
-       List<Music>musicList= musicService.displayAllTracks();
-       return new ResponseEntity<>(musicList,HttpStatus.OK);
+        List<Music>musicList= musicService.displayAllTracks();
+        return new ResponseEntity<>(musicList,HttpStatus.OK);
     }
     @PutMapping("/tracks/{id}")
     public ResponseEntity<Music> updateTrack(@RequestBody Music music,@PathVariable int id)
@@ -42,5 +46,19 @@ public class MusicController {
     {
         musicService.deleteTrack(id);
         return new ResponseEntity<Music>(HttpStatus.OK);
+    }
+
+
+
+
+
+    @GetMapping("/tracks/{name}")
+    public ResponseEntity<?> displayTracksByName(@PathVariable String name) throws Exception
+    {
+        ResponseEntity responseEntity;
+        List<Music> musicList= musicService.displayTracksByName(name);
+        responseEntity=new ResponseEntity<List>(musicList,HttpStatus.OK);
+        return responseEntity;
+
     }
 }
