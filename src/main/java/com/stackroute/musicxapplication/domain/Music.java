@@ -4,21 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Document(value="Music")
 public class Music {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull(message = "Music trackId not be Null")
     private int trackId;
+    @NotNull(message = "Music trackName not be Null")
+    @Size(min = 1,max = 120, message = "size should be between 1-120")
     private String trackName;
+    @NotNull(message = "Music trackComments not be Null")
+    @Size(min=3,max = 140)
     private String trackComments;
 }

@@ -46,15 +46,15 @@ public class MusicServiceImpl  {
         musicRepository.deleteById(id);
     }
 
-    public List<Music> displayTracksByName(String name) throws TrackNotFoundException{
-        if(musicRepository.searchTrackByName(name)==0)
-        {
-            throw new TrackNotFoundException("Track not found");
-        }
-        else
-        {
-            return musicRepository.trackByName(name);
-        }
-
-    }
+//    public List<Music> displayTracksByName(String name) throws TrackNotFoundException{
+//        if(musicRepository.searchTrackByName(name)==0)
+//        {
+//            throw new TrackNotFoundException("Track not found");
+//        }
+//        else
+//        {
+//            return musicRepository.trackByName(name);
+//        }
+//
+//    }
 }

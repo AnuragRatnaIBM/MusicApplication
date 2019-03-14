@@ -1,12 +1,14 @@
 package com.stackroute.musicxapplication.controller;
 
 import com.stackroute.musicxapplication.domain.Music;
+import com.stackroute.musicxapplication.exceptions.TrackAlreadyExitsException;
 import com.stackroute.musicxapplication.service.MusicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -22,7 +24,7 @@ public class MusicController {
     }
 
     @PostMapping("/music")
-    public ResponseEntity<Music> saveTrack(@RequestBody Music music) throws Exception {
+    public ResponseEntity<Music> saveTrack(@Valid @RequestBody Music music) throws TrackAlreadyExitsException {
         ResponseEntity responseEntity;
         musicServiceImpl.saveTrack(music);
         responseEntity = new ResponseEntity<String>("Successfully CREATED", HttpStatus.CREATED);
@@ -36,7 +38,7 @@ public class MusicController {
     }
 
     @PutMapping("/musics/{id}")
-    public ResponseEntity<Music> updateTrack(@RequestBody Music music, @PathVariable int id) {
+    public ResponseEntity<Music> updateTrack(@Valid @RequestBody Music music, @PathVariable int id) {
         Music updatedTrack = musicServiceImpl.updateTrack(music, id);
         return new ResponseEntity<Music>(updatedTrack, HttpStatus.OK);
     }
@@ -48,12 +50,12 @@ public class MusicController {
     }
 
 
-    @GetMapping("/music/{name}")
-    public ResponseEntity<?> displayTracksByName(@PathVariable String name) throws Exception {
-        ResponseEntity responseEntity;
-        List<Music> musicList = musicServiceImpl.displayTracksByName(name);
-        responseEntity = new ResponseEntity<List>(musicList, HttpStatus.OK);
-        return responseEntity;
-
-    }
+//    @GetMapping("/musics/{name}")
+//    public ResponseEntity<?> displayTracksByName(@PathVariable String name) throws Exception {
+//        ResponseEntity responseEntity;
+//        List<Music> musicList = musicServiceImpl.displayTracksByName(name);
+//        responseEntity = new ResponseEntity<List>(musicList, HttpStatus.OK);
+//        return responseEntity;
+//
+//    }
 }

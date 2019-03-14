@@ -12,6 +12,6 @@ public interface MusicService {
     Music updateTrack(Music newMusic, int id);
 
     void deleteTrack(int id);
-
-    List<Music> displayTracksByName(String name) throws Exception;
+//
+//    List<Music> displayTracksByName(String name) throws Exception;
 }
